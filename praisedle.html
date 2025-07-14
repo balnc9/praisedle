@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Praisedle - Worship Music Guessing Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="praisedle.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="description" content="Test your worship music knowledge with Praisedle! A Heardle-style guessing game for Christian and worship songs.">
+    <meta name="keywords" content="worship music, christian music, heardle, guessing game, praise songs">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="title">🎵 Praisedle</h1>
+            <p class="subtitle">Guess the worship song!</p>
+        </header>
+
+        <div class="game-section">
+            <!-- Audio Player -->
+            <div class="audio-section">
+                <audio id="audio-player" preload="metadata"></audio>
+                <div class="progress-bars">
+                    <div class="progress-bar" data-seconds="1">
+                        <button class="play-btn" data-length="1"><i class="fas fa-play"></i> 1s</button>
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-bar" data-seconds="2">
+                        <button class="play-btn" data-length="2"><i class="fas fa-play"></i> 2s</button>
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-bar" data-seconds="4">
+                        <button class="play-btn" data-length="4"><i class="fas fa-play"></i> 4s</button>
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-bar" data-seconds="7">
+                        <button class="play-btn" data-length="7"><i class="fas fa-play"></i> 7s</button>
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-bar" data-seconds="11">
+                        <button class="play-btn" data-length="11"><i class="fas fa-play"></i> 11s</button>
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-bar" data-seconds="16">
+                        <button class="play-btn" data-length="16"><i class="fas fa-play"></i> 16s</button>
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guess History -->
+            <div class="guess-history">
+                <div class="guess-box" data-attempt="1">
+                    <div class="guess-number">1</div>
+                    <div class="guess-content">
+                        <div class="guess-song">---</div>
+                        <div class="guess-artist">---</div>
+                    </div>
+                    <div class="guess-result"><i class="fas fa-question"></i></div>
+                </div>
+                <div class="guess-box" data-attempt="2">
+                    <div class="guess-number">2</div>
+                    <div class="guess-content">
+                        <div class="guess-song">---</div>
+                        <div class="guess-artist">---</div>
+                    </div>
+                    <div class="guess-result"><i class="fas fa-question"></i></div>
+                </div>
+                <div class="guess-box" data-attempt="3">
+                    <div class="guess-number">3</div>
+                    <div class="guess-content">
+                        <div class="guess-song">---</div>
+                        <div class="guess-artist">---</div>
+                    </div>
+                    <div class="guess-result"><i class="fas fa-question"></i></div>
+                </div>
+                <div class="guess-box" data-attempt="4">
+                    <div class="guess-number">4</div>
+                    <div class="guess-content">
+                        <div class="guess-song">---</div>
+                        <div class="guess-artist">---</div>
+                    </div>
+                    <div class="guess-result"><i class="fas fa-question"></i></div>
+                </div>
+                <div class="guess-box" data-attempt="5">
+                    <div class="guess-number">5</div>
+                    <div class="guess-content">
+                        <div class="guess-song">---</div>
+                        <div class="guess-artist">---</div>
+                    </div>
+                    <div class="guess-result"><i class="fas fa-question"></i></div>
+                </div>
+                <div class="guess-box" data-attempt="6">
+                    <div class="guess-number">6</div>
+                    <div class="guess-content">
+                        <div class="guess-song">---</div>
+                        <div class="guess-artist">---</div>
+                    </div>
+                    <div class="guess-result"><i class="fas fa-question"></i></div>
+                </div>
+            </div>
+
+            <!-- Guess Input -->
+            <div class="guess-section">
+                <div class="input-group">
+                    <input type="text" id="song-guess" placeholder="Enter song title..." autocomplete="off">
+                    <input type="text" id="artist-guess" placeholder="Enter artist..." autocomplete="off">
+                </div>
+                <div class="button-group">
+                    <button id="submit-guess" class="btn btn-primary">Submit Guess</button>
+                    <button id="skip-guess" class="btn btn-secondary">Skip</button>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="result-section" class="result-section hidden">
+                <div id="result-message"></div>
+                <div id="correct-answer" class="correct-answer"></div>
+                <button id="next-song" class="btn btn-primary">Next Song</button>
+            </div>
+        </div>
+
+        <!-- Enhanced Statistics -->
+        <div class="stats-section">
+            <h3><i class="fas fa-chart-line"></i> Your Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="games-played">0</div>
+                    <div class="stat-label">Games Played</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="win-percentage">0%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="current-streak">0</div>
+                    <div class="stat-label">Current Streak</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="max-streak">0</div>
+                    <div class="stat-label">Best Streak</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="avg-attempts">0</div>
+                    <div class="stat-label">Avg Attempts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="total-score">0</div>
+                    <div class="stat-label">Total Score</div>
+                </div>
+            </div>
+            
+            <!-- Streak Display -->
+            <div class="streak-display">
+                <div class="streak-flame">
+                    <i class="fas fa-fire" id="streak-icon"></i>
+                    <span id="streak-text">Keep playing to start a streak!</span>
+                </div>
+            </div>
+
+            <!-- Guess Distribution -->
+            <div class="guess-distribution">
+                <h4>Guess Distribution</h4>
+                <div class="distribution-bars">
+                    <div class="distribution-row">
+                        <span class="attempt-label">1</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" data-attempts="1" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-1">0</span>
+                        </div>
+                    </div>
+                    <div class="distribution-row">
+                        <span class="attempt-label">2</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" data-attempts="2" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-2">0</span>
+                        </div>
+                    </div>
+                    <div class="distribution-row">
+                        <span class="attempt-label">3</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" data-attempts="3" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-3">0</span>
+                        </div>
+                    </div>
+                    <div class="distribution-row">
+                        <span class="attempt-label">4</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" data-attempts="4" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-4">0</span>
+                        </div>
+                    </div>
+                    <div class="distribution-row">
+                        <span class="attempt-label">5</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" data-attempts="5" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-5">0</span>
+                        </div>
+                    </div>
+                    <div class="distribution-row">
+                        <span class="attempt-label">6</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" data-attempts="6" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-6">0</span>
+                        </div>
+                    </div>
+                    <div class="distribution-row">
+                        <span class="attempt-label">X</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill failed" style="width: 0%"></div>
+                            <span class="distribution-count" id="dist-failed">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Praisedle. Made with ❤️ for the worship community.</p>
+            <p>Test your knowledge of worship and Christian music!</p>
+        </footer>
+    </div>
+
+    <script src="praisedle.js"></script>
+</body>
+</html>
