@@ -1,21 +1,7 @@
 {
   "version": 2,
   "name": "praisedle",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
-    {
-      "src": "/health",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
     {
       "src": "/(.*\\.(css|js|json|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))",
       "dest": "/$1",
@@ -24,16 +10,12 @@
       }
     },
     {
+      "src": "/",
+      "dest": "/praisedle.html"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/server.js"
+      "dest": "/praisedle.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "server.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 } 
